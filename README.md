@@ -1,7 +1,7 @@
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>ENTER YOUR NAME: VELLACHI TILAK</H3>
+<H3>ENTER YOUR REGISTER NO: 212223240172</H3>
 <H3>EX. NO.4</H3>
-<H3>DATE:</H3>
+<H3>DATE:18/05/2026</H3>
 <H1 ALIGN =CENTER> Implementation of Hidden Markov Model</H1>
 
 ## Aim: 
@@ -21,10 +21,46 @@ Step 8:Calculate the probability of the observed sequence by summing the last ro
 Step 9:Find the most likely sequence of hidden states by selecting the hidden state with the highest probability at each time step based on the alpha matrix.<br>
 
 ## Program:
-Insert your Program here
+```
+import numpy as np
+#Define the transition matrix
+transition_matrix =np.array([[0.7,0.3],[0.4,0.6]])
+#Define the emission matrix
+emission_matrix =np.array ([[0.1,0.5,0.4],[0.6,0.1,0.3]])
+#Define the initial probabilities
+initial_probabilities = np.array([0.6,0.4])
+#Define the observed sequence
+observed_sequence = np.array([2,0,0,1])
+
+# Initialize the alpha matrix
+alpha = np. zeros ((len(observed_sequence) ,len (initial_probabilities) ) )
+# Calculate the first row of the alpha matrix
+alpha [0,:] = initial_probabilities *emission_matrix[:, observed_sequence [0]]
+
+# Loop through the rest of the observed sequence and calculate the rest of the alpha matrix
+for t in range (1, len (observed_sequence) ) :
+  for j in range (len (initial_probabilities) ) :
+    alpha[t,j]= emission_matrix [j,observed_sequence[t]] *np.sum(alpha[t-1:]*transition_matrix[:, j])
+
+# Calculate the probability of the observed sequence
+probability = np.sum(alpha[-1,:])
+# Print the probability of the observed sequence
+print ("The probability of the observed sequence is: " ,probability)
+# Find the most likely sequence of weather states given the observed sequence
+most_likely_sequence=[]
+for t in range (len (observed_sequence)):
+  if alpha [t, 0] > alpha [t,1]:
+    most_likely_sequence.append ("hot")
+  else:
+    most_likely_sequence.append ("cold")
+
+print("The most likely sequence of Weather States is",most_likely_sequence)
+```
 
 ## Output:
-Show your results here
+
+<img width="1085" height="50" alt="image" src="https://github.com/user-attachments/assets/b4ad5ae8-5dba-41a8-829b-9d9d5b8c18a2" />
+
 
 ## Result:
 Thus Hidden Markov Model is implemented using python.
